@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.DingdanxinxiDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.DingdanxinxiEntity" id="dingdanxinxiMap">
+        <result property="dingdanbianhao" column="dingdanbianhao"/>
+        <result property="jianchajianyanxiangmu" column="jianchajianyanxiangmu"/>
+        <result property="weixiufuwu" column="weixiufuwu"/>
+        <result property="dingdanneirong" column="dingdanneirong"/>
+        <result property="dingdanxuzhi" column="dingdanxuzhi"/>
+        <result property="paidanshijian" column="paidanshijian"/>
+        <result property="laorenzhanghao" column="laorenzhanghao"/>
+        <result property="laorenxingming" column="laorenxingming"/>
+        <result property="laorenxingbie" column="laorenxingbie"/>
+        <result property="laorennianling" column="laorennianling"/>
+        <result property="laorenzhaopian" column="laorenzhaopian"/>
+        <result property="lianxidianhua" column="lianxidianhua"/>
+        <result property="lianxidizhi" column="lianxidizhi"/>
+        <result property="laorendangqianzhuangtai" column="laorendangqianzhuangtai"/>
+        <result property="renyuanzhanghao" column="renyuanzhanghao"/>
+        <result property="renyuanxingming" column="renyuanxingming"/>
+        <result property="shoujihao" column="shoujihao"/>
+        <result property="userid" column="userid"/>
+    </resultMap>
+
+	<select id="selectListVO"
+		resultType="com.entity.vo.DingdanxinxiVO" >
+		SELECT * FROM dingdanxinxi  dingdanxinxi         
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectVO"
+		resultType="com.entity.vo.DingdanxinxiVO" >
+		SELECT  dingdanxinxi.* FROM dingdanxinxi  dingdanxinxi
+ 		<where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+    <select id="selectListView"
+		resultType="com.entity.view.DingdanxinxiView" >
+
+		SELECT  dingdanxinxi.* FROM dingdanxinxi  dingdanxinxi 	        
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.entity.view.DingdanxinxiView" >
+		SELECT * FROM dingdanxinxi  dingdanxinxi <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>注册</title>
+		<!-- bootstrap样式，地图插件使用 -->
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../layui/css/layui.css">
+		<!-- 样式 -->
+		<link rel="stylesheet" href="../../css/style.css" />
+		<!-- 主题（主要颜色设置） -->
+		<link rel="stylesheet" href="../../css/theme.css" />
+		<!-- 通用的css -->
+		<link rel="stylesheet" href="../../css/common.css" />
+	</head>
+	<style>
+		html::after {
+			position: fixed;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 0;
+			content: '';
+			display: block;
+			background-attachment: fixed;
+			background-size: cover;
+			background-position: center;
+			z-index: -1;
+		}
+		#swiper {
+			overflow: hidden;
+			margin: 0 auto;
+		}
+		#swiper .layui-carousel-ind li {
+			width: 100px;
+			height: 2px;
+			border-width: 0;
+			border-style: solid;
+			border-color: rgba(0,0,0,.3);
+			border-radius: 0px;
+			background-color: #f7f7f7;
+			box-shadow: 0 0 0px rgba(255,0,0,.8);
+		}
+		#swiper .layui-carousel-ind li.layui-this {
+			width: 100px;
+			height: 2px;
+			border-width: 0;
+			border-style: solid;
+			border-color: rgba(0,0,0,.3);
+			border-radius: 0;
+			background-color: rgba(255, 255, 255, 1);
+			box-shadow: 0 0 0px rgba(255,0,0,.8);
+		}
+		
+		button, button:focus {
+			outline: none;
+		}
+		
+		.data-add-container .add .layui-select-title .layui-unselect {
+			padding: 0 12px;
+			height: 40px;
+			font-size: 14px;
+			color: rgba(30, 144, 255, 1);
+			border-radius: 4px;
+			border-width: 1px;
+			border-style: solid;
+			border-color: #DCDFE6;
+			background-color: #fff;
+			box-shadow: 0 0 0px rgba(255,0,0,.8);
+			text-align: left;
+		}
+		.data-add-container .add .layui-form-item {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.data-add-container .layui-form-pane .layui-form-item[pane] .layui-form-label {
+			margin: 0;
+			position: inherit;
+			background: transparent;
+			border: 0;
+		}
+		.data-add-container .add .layui-input-block {
+			margin: 0;
+			flex: 1;
+		}
+		.data-add-container .layui-form-pane .layui-form-item[pane] .layui-input-inline {
+			margin: 0;
+			flex: 1;
+			display: flex;
+		}
+	</style>
+	<body style="background: #EEEEEE; ">
+
+
+		<div id="app">
+
+			<!--
+			<div class="layui-carousel" id="swiper">
+				<div carousel-item id="swiper-item">
+					<div v-for="(item,index) in swiperList" v-bind:key="index">
+						<img class="swiper-item" :src="item.img">
+					</div>
+				</div>
+			</div> -->
+			<div class="layui-carousel" id="swiper" :style='{"boxShadow":"0 0 0px rgba(255,0,0,.8)","margin":"0 auto","borderColor":"rgba(0,0,0,.3)","borderRadius":"0px","borderWidth":"0","width":"100%","borderStyle":"solid"}'>
+			  <div carousel-item id="swiper-item">
+				<div v-for="(item,index) in swiperList" :key="index">
+					<img style="width: 100%;height: 100%;object-fit:cover;" :src="item.img" />
+				</div>
+			  </div>
+			</div>
+			<!-- 轮播图 -->
+
+			<div class="data-add-container" :style='{"padding":"10px","boxShadow":"0px 0px 0px rgba(255,0,0,.8)","margin":"auto","borderColor":"rgba(30, 144, 255, 1)","backgroundColor":"rgba(251, 251, 251, 1)","borderRadius":"5px","borderWidth":"0","borderStyle":"solid"}'>
+
+				<form class="layui-form layui-form-pane add" lay-filter="myForm">
+					
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">档案编号：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.danganbianhao" type="text" :readonly="ro.danganbianhao" name="danganbianhao" id="danganbianhao" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">老人账号：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.laorenzhanghao" type="text" :readonly="ro.laorenzhanghao" name="laorenzhanghao" id="laorenzhanghao" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">老人姓名：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.laorenxingming" type="text" :readonly="ro.laorenxingming" name="laorenxingming" id="laorenxingming" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+                        <label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">老人性别：</label>
+                        <div class="layui-input-block">
+                            <select name="laorenxingbie" id="laorenxingbie" lay-filter="laorenxingbie">
+                                <option value="">请选择</option>
+                                <option v-for="(item,index) in laorenxingbie" v-bind:key="index" :value="item">{{item}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">老人年龄：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.laorennianling" type="text" :readonly="ro.laorennianling" name="laorennianling" id="laorennianling" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">老人照片：</label>
+						<div class="layui-input-block">
+							<div v-if="detail.laorenzhaopian" style="display:inline-block;margin-right:10px;">
+								<img id="laorenzhaopianImg" style="width: 100px;height: 100px;border-radius: 50%;border: 2px solid #EEEEEE;" :src="detail.laorenzhaopian">
+								<input type="hidden" :value="detail.laorenzhaopian" id="laorenzhaopian" name="laorenzhaopian" />
+							</div>
+							<button v-if="!ro.laorenzhaopian" :style='{"padding":"0 10px","boxShadow":"0 0 0px rgba(255,0,0,.5)","margin":"0 10px 0 0","borderColor":"#ccc","backgroundColor":"red","color":"#fff","borderRadius":"8px","borderWidth":"0","width":"auto","fontSize":"12px","borderStyle":"solid","height":"40px"}' type="button" class="layui-btn btn-theme" id="laorenzhaopianUpload">
+								<i v-if="true" :style='{"color":"#fff","show":true,"fontSize":"14px"}' class="layui-icon">&#xe67c;</i>上传老人照片
+							</button>
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">联系电话：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.lianxidianhua" type="text" :readonly="ro.lianxidianhua" name="lianxidianhua" id="lianxidianhua" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">联系地址：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.lianxidizhi" type="text" :readonly="ro.lianxidizhi" name="lianxidizhi" id="lianxidizhi" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+                        <label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">身体状况：</label>
+                        <div class="layui-input-block">
+                            <select name="shentizhuangkuang" id="shentizhuangkuang" lay-filter="shentizhuangkuang">
+                                <option value="">请选择</option>
+                                <option v-for="(item,index) in shentizhuangkuang" v-bind:key="index" :value="item">{{item}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">身高：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.shengao" type="text" :readonly="ro.shengao" name="shengao" id="shengao" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">体重：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.tizhong" type="text" :readonly="ro.tizhong" name="tizhong" id="tizhong" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+                        <label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">老人当前状态：</label>
+                        <div class="layui-input-block">
+                            <select name="laorendangqianzhuangtai" id="laorendangqianzhuangtai" lay-filter="laorendangqianzhuangtai">
+                                <option value="">请选择</option>
+                                <option v-for="(item,index) in laorendangqianzhuangtai" v-bind:key="index" :value="item">{{item}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">紧急联系人姓名：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.jinjilianxirenxingming" type="text" :readonly="ro.jinjilianxirenxingming" name="jinjilianxirenxingming" id="jinjilianxirenxingming" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">紧急联系人号码：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.jinjilianxirenhaoma" type="text" :readonly="ro.jinjilianxirenhaoma" name="jinjilianxirenhaoma" id="jinjilianxirenhaoma" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">紧急联系人关系：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.jinjilianxirenguanxi" type="text" :readonly="ro.jinjilianxirenguanxi" name="jinjilianxirenguanxi" id="jinjilianxirenguanxi" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">居家养老服务范围：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' v-model="detail.jujiayanglaofuwufanwei" type="text" :readonly="ro.jujiayanglaofuwufanwei" name="jujiayanglaofuwufanwei" id="jujiayanglaofuwufanwei" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+                    <div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item" pane>
+						<label  :style='{"width":"120px","padding":"0 40px 0 0","fontSize":"14px","color":"rgba(30, 144, 255, 1)","textAlign":"center"}' class="layui-form-label">档案更新日期：</label>
+						<div class="layui-input-block">
+							<input :style='{"padding":"0 12px","boxShadow":"0 0 0px rgba(255,0,0,.8)","borderColor":"#DCDFE6","backgroundColor":"#fff","color":"rgba(30, 144, 255, 1)","borderRadius":"4px","textAlign":"left","borderWidth":"1px","fontSize":"14px","borderStyle":"solid","height":"40px"}' type="text" name="dangangengxinriqi" id="dangangengxinriqi" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+
+
+					<div  :style='{"padding":"15px","boxShadow":"0 0 0px rgba(234, 232, 232, 1)","margin":"0 100px","borderColor":"rgba(210, 210, 211, 1)","backgroundColor":"rgba(255, 255, 255, 1)","borderRadius":"0px","borderWidth":"0 0 1px 0","borderStyle":"solid"}' class="layui-form-item">
+						<div class="layui-input-block" style="text-align: right;">
+							<button :style='{"padding":"0 30px","boxShadow":"0 0 0px rgba(255,0,0,.5)","margin":"0 10px","borderColor":"#ccc","backgroundColor":"rgba(255, 69, 0, 1)","color":"#fff","borderRadius":"8px","borderWidth":"0","width":"auto","fontSize":"16px","borderStyle":"solid","height":"44px"}' class="layui-btn btn-submit" lay-submit lay-filter="*">提交</button>
+							<button :style='{"padding":"0 30px","boxShadow":"0 0 0px rgba(255,0,0,.5)","margin":"0 10px","borderColor":"#ccc","backgroundColor":"rgba(30, 144, 255, 1)","color":"rgba(255, 255, 255, 1)","borderRadius":"8px","borderWidth":"0","width":"auto","fontSize":"14px","borderStyle":"solid","height":"44px"}' type="reset" class="layui-btn layui-btn-primary">重置</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<script src="../../layui/layui.js"></script>
+		<script src="../../js/vue.js"></script>
+		<!-- 组件配置信息 -->
+		<script src="../../js/config.js"></script>
+		<!-- 扩展插件配置信息 -->
+		<script src="../../modules/config.js"></script>
+		<!-- 工具方法 -->
+		<script src="../../js/utils.js"></script>
+		<!-- 校验格式工具类 -->
+		<script src="../../js/validate.js"></script>
+		<!-- 地图 -->
+		<script type="text/javascript" src="../../js/jquery.js"></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=ca04cee7ac952691aa67a131e6f0cee0"></script>
+		<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../js/bootstrap.AMapPositionPicker.js"></script>
+
+		<script>
+			var jquery = $;
+			
+			var vue = new Vue({
+				el: '#app',
+				data: {
+					// 轮播图
+					swiperList: [{
+						img: '../../img/banner.jpg'
+					}],
+					dataList: [],
+      					ro:{
+				        danganbianhao : false,
+				        laorenzhanghao : false,
+				        laorenxingming : false,
+				        laorenxingbie : false,
+				        laorennianling : false,
+				        laorenzhaopian : false,
+				        lianxidianhua : false,
+				        lianxidizhi : false,
+				        shentizhuangkuang : false,
+				        shengao : false,
+				        tizhong : false,
+				        laorendangqianzhuangtai : false,
+				        jiwangbingshi : false,
+				        jinjilianxirenxingming : false,
+				        jinjilianxirenhaoma : false,
+				        jinjilianxirenguanxi : false,
+				        jujiayanglaofuwufanwei : false,
+				        dangangengxinriqi : false,
+				        userid : false,
+              				},
+                    detail: {
+                        danganbianhao: genTradeNo(),
+                        laorenzhanghao: '',
+                        laorenxingming: '',
+                        laorenxingbie: '',
+                        laorennianling: '',
+                        laorenzhaopian: '',
+                        lianxidianhua: '',
+                        lianxidizhi: '',
+                        shentizhuangkuang: '',
+                        shengao: '',
+                        tizhong: '',
+                        laorendangqianzhuangtai: '',
+                        jiwangbingshi: '',
+                        jinjilianxirenxingming: '',
+                        jinjilianxirenhaoma: '',
+                        jinjilianxirenguanxi: '',
+                        jujiayanglaofuwufanwei: '',
+                        dangangengxinriqi: '',
+                        userid: '',
+                    },
+					laorenxingbie: [],
+					shentizhuangkuang: [],
+					laorendangqianzhuangtai: [],
+					centerMenu: centerMenu
+				},
+				updated: function() {
+					layui.form.render('select', 'myForm');
+				},
+                computed: {
+                },
+				methods: {
+					jump(url) {
+						jump(url)
+					}
+				}
+			})
+
+
+			layui.use(['layer', 'element', 'carousel', 'http', 'jquery', 'form', 'upload', 'laydate','tinymce'], function() {
+				var layer = layui.layer;
+				var element = layui.element;
+				var carousel = layui.carousel;
+				var http = layui.http;
+				var jquery = layui.jquery;
+				var form = layui.form;
+				var upload = layui.upload;
+				var laydate = layui.laydate;
+                var tinymce = layui.tinymce
+
+				// 获取轮播图 数据
+				http.request('config/list', 'get', {
+					page: 1,
+					limit: 5
+				}, function(res) {
+					if (res.data.list.length > 0) {
+						var swiperItemHtml = '';
+						for (let item of res.data.list) {
+							if (item.name.indexOf('picture') >= 0 && item.value && item.value != "" && item.value != null) {
+								swiperItemHtml +=
+									'<div>' +
+									'<img style="width: 100%;height: 100%;object-fit:cover;" class="swiper-item" src="' + item.value + '">' +
+									'</div>';
+							}
+						}
+						jquery('#swiper-item').html(swiperItemHtml);
+						// 轮播图
+						vue.$nextTick(() => {
+						  carousel.render({
+						  	elem: '#swiper',
+							width: '100%',
+						  	height: '300px',
+						  	arrow: 'hover',
+						  	anim: 'fade',
+						  	autoplay: 'true',
+						  	interval: '3000',
+						  	indicator: 'inside'
+						  });
+						
+						})
+						// carousel.render({
+						// 	elem: '#swiper',
+						// 	width: swiper.width,height:swiper.height,
+						// 	arrow: swiper.arrow,
+						// 	anim: swiper.anim,
+						// 	interval: swiper.interval,
+						// 	indicator: "none"
+						// });
+					}
+				});
+
+				vue.laorenxingbie = '男,女'.split(',')
+				// 上传图片
+				var laorenzhaopianUpload = upload.render({
+					//绑定元素
+					elem: '#laorenzhaopianUpload',
+					//上传接口
+					url: http.baseurl + 'file/upload',
+					// 请求头
+					headers: {
+						Token: localStorage.getItem('Token')
+					},
+					// 允许上传时校验的文件类型
+					accept: 'images',
+					before: function() {
+						//loading层
+						var index = layer.load(1, {
+							shade: [0.1, '#fff'] //0.1透明度的白色背景
+						});
+					},
+					// 上传成功
+					done: function(res) {
+						console.log(res);
+						layer.closeAll();
+						if (res.code == 0) {
+							layer.msg("上传成功", {
+								time: 2000,
+								icon: 6
+							})
+							var url = http.baseurl + 'upload/' + res.file;
+							jquery('#laorenzhaopian').val(url);
+							jquery('#laorenzhaopianImg').attr('src', url)
+                            vue.detail.laorenzhaopian = url;
+						} else {
+							layer.msg(res.msg, {
+								time: 2000,
+								icon: 5
+							})
+						}
+					},
+					//请求异常回调
+					error: function() {
+						layer.closeAll();
+						layer.msg("请求接口异常", {
+							time: 2000,
+							icon: 5
+						})
+					}
+				});
+				vue.shentizhuangkuang = '良好,一般,较差'.split(',')
+				vue.laorendangqianzhuangtai = '在家,住院'.split(',')
+				jquery('#dangangengxinriqi').val(getCurDate());
+				laydate.render({
+					elem: '#dangangengxinriqi'
+				});
+				
+                // session独取
+				let table = localStorage.getItem("userTable");
+				http.request(`${table}/session`, 'get', {}, function(data) {
+					// 表单赋值
+					//form.val("myForm", data.data);
+					data = data.data
+					for (var key in data){
+                                        }
+				});
+
+                // 跨表
+                if(http.getParam('corss')){
+					var obj = JSON.parse(localStorage.getItem('crossObj'));
+					for (var o in obj){
+					if(o=='danganbianhao'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.danganbianhao = true;
+						continue;
+                                        }
+					if(o=='laorenzhanghao'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.laorenzhanghao = true;
+						continue;
+                                        }
+					if(o=='laorenxingming'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.laorenxingming = true;
+						continue;
+                                        }
+					if(o=='laorenxingbie'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.laorenxingbie = true;
+						continue;
+                                        }
+					if(o=='laorennianling'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.laorennianling = true;
+						continue;
+                                        }
+					if(o=='laorenzhaopian'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.laorenzhaopian = true;
+						continue;
+                                        }
+					if(o=='lianxidianhua'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.lianxidianhua = true;
+						continue;
+                                        }
+					if(o=='lianxidizhi'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.lianxidizhi = true;
+						continue;
+                                        }
+					if(o=='shentizhuangkuang'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.shentizhuangkuang = true;
+						continue;
+                                        }
+					if(o=='shengao'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.shengao = true;
+						continue;
+                                        }
+					if(o=='tizhong'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.tizhong = true;
+						continue;
+                                        }
+					if(o=='laorendangqianzhuangtai'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.laorendangqianzhuangtai = true;
+						continue;
+                                        }
+					if(o=='jiwangbingshi'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.jiwangbingshi = true;
+						continue;
+                                        }
+					if(o=='jinjilianxirenxingming'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.jinjilianxirenxingming = true;
+						continue;
+                                        }
+					if(o=='jinjilianxirenhaoma'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.jinjilianxirenhaoma = true;
+						continue;
+                                        }
+					if(o=='jinjilianxirenguanxi'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.jinjilianxirenguanxi = true;
+						continue;
+                                        }
+					if(o=='jujiayanglaofuwufanwei'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.jujiayanglaofuwufanwei = true;
+						continue;
+                                        }
+					if(o=='dangangengxinriqi'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.dangangengxinriqi = true;
+						continue;
+                                        }
+					if(o=='userid'){
+          	                                vue.detail[o] = obj[o];
+						vue.ro.userid = true;
+						continue;
+                                        }
+                                        }
+				}
+				
+
+				// 提交
+				form.on('submit(*)', function(data) {
+					data = data.field;
+					
+                    // 数据校验
+                    if(!data.danganbianhao){
+                        layer.msg('档案编号不能为空', {
+							time: 2000,
+							icon: 5
+						});
+                        return false
+                    }
+                    if(!data.laorenzhanghao){
+                        layer.msg('老人账号不能为空', {
+							time: 2000,
+							icon: 5
+						});
+                        return false
+                    }
+                    if(!data.shentizhuangkuang){
+                        layer.msg('身体状况不能为空', {
+							time: 2000,
+							icon: 5
+						});
+                        return false
+                    }
+                    if(!data.shengao){
+                        layer.msg('身高不能为空', {
+							time: 2000,
+							icon: 5
+						});
+                        return false
+                    }
+                    if(!data.tizhong){
+                        layer.msg('体重不能为空', {
+							time: 2000,
+							icon: 5
+						});
+                        return false
+                    }
+                    if(!data.jinjilianxirenxingming){
+                        layer.msg('紧急联系人姓名不能为空', {
+							time: 2000,
+							icon: 5
+						});
+                        return false
+                    }
+                    if(!isMobile(data.jinjilianxirenhaoma)){
+                        layer.msg('紧急联系人号码应输入手机格式', {
+							time: 2000,
+							icon: 5
+						});
+                        return false
+                    }
+
+					// 跨表计算
+					
+                    // 比较大小
+					
+					// 提交数据
+					http.requestJson('laorendangan' + '/add', 'post', data, function(res) {
+					 	layer.msg('提交成功', {
+					 		time: 2000,
+					 		icon: 6
+					 	}, function() {
+					 		back();
+						});
+					 });
+
+					return false
+				});
+
+			});
+		</script>
+	</body>
+</html>
